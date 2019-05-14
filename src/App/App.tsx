@@ -4,7 +4,6 @@ import { observable } from "mobx";
 
 const imgSword="https://png2.kisspng.com/sh/411d5fd005bf61bafa5f9697b532fba4/L0KzQYm3U8I4N5Z8fZH0aYP2gLBuTfx2c5Yyi91Ed3Hve7b5Tf9jcV58edC2a3Xxf7PwTfFvaZxuhp98a4n6cb3yhgIudJpsReV9YYKwh7L5k702aZNmftVrYXK6RILqWb4yPWE6TaI8OEG4QoO5UMM5O2U8TaIBLoDxd1==/kisspng-luke-skywalker-obi-wan-kenobi-anakin-skywalker-lig-star-wars-5abafcbab741c9.1505503815222038347506.png";
 
-
 @observer
 export class App extends React.Component {
 
@@ -14,13 +13,10 @@ export class App extends React.Component {
     @observable api: string = "https://swapi.co/api/people/";
 
 async componentDidMount(){
-    
         const response = await fetch(this.api);
         const respJson = await response.json();
         this.results = respJson.results;
-        console.log(this.results)
         this.isLoading = false
-
  }
 
  opisy = (props: []) => {
@@ -33,22 +29,22 @@ async componentDidMount(){
    const renderNames = datas.map( 
            (el => <Names {...el}
                     state={this.data}
-                    details={this.opisy}  
+                    details={this.opisy} 
                     />)
            ) 
 
      return (
-         <div className="app">
-             <div className="namesBox">
-               <h1>Star wars hero</h1>
-               <div ><img src={imgSword} className="swordImg"/></div>
-               <div className="lightSwordBlue"/>
-               {this.isLoading && <div className="spinner"></div>}
-               {renderNames}
-             </div>  
-         </div>
-     )
- }
+            <div className="app">
+                <div className="namesBox">
+                <h1>StarWars Heroes</h1>
+                <div ><img src={imgSword} className="swordImg"/></div>
+                <div className="lightSwordBlue"/>
+                {this.isLoading && <div className="spinner"></div>}
+                {renderNames}
+                </div>  
+            </div>
+            )
+    }
 }
 
 
@@ -70,7 +66,7 @@ class Names extends React.Component<NamesPropsType> {
       return (
            <div onClick={this.showDetails}>
               <h2 style={{color: this.isOpen? '#4ed3ff' : '#cddde8'}}>{this.props.name}</h2>
-               {this.isOpen && <Details details = {this.props.state} isVisible={this.isOpen}/> }
+               {this.isOpen && <Details details={this.props.state} isVisible={this.isOpen}/> }
                <div className="lightSword" style={{boxShadow: this.isOpen? '0px 0px 6px 8px rgba(9,150,203,1)' : '0px 0px 4px 6px rgba(196,6,25,1)'}}/>
             </div>
        );
@@ -87,7 +83,6 @@ interface DataDetailsPropsType {
     eye_color:string
 }
 interface DetailsPropsType {
-    
     isVisible: boolean, 
     details: DataDetailsPropsType 
 }
