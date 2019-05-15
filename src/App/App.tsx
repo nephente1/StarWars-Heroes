@@ -4,46 +4,66 @@ import { observable } from "mobx";
 
 const imgSword="https://png2.kisspng.com/sh/411d5fd005bf61bafa5f9697b532fba4/L0KzQYm3U8I4N5Z8fZH0aYP2gLBuTfx2c5Yyi91Ed3Hve7b5Tf9jcV58edC2a3Xxf7PwTfFvaZxuhp98a4n6cb3yhgIudJpsReV9YYKwh7L5k702aZNmftVrYXK6RILqWb4yPWE6TaI8OEG4QoO5UMM5O2U8TaIBLoDxd1==/kisspng-luke-skywalker-obi-wan-kenobi-anakin-skywalker-lig-star-wars-5abafcbab741c9.1505503815222038347506.png";
 
+interface ResponseItemType {
+    name: string,
+    height: number, 
+    mass: number, 
+    birth_year:string, 
+    gender:string, 
+    hair_color:string, 
+    skin_color:string, 
+    eye_color:string
+}
 @observer
-export class App extends React.Component {
+export class App extends React.Component<{}> {
 
-    @observable data: [] | null = [];
-    @observable results: [] | null = [];
+    @observable data: Array<ResponseItemType> | null = [];
+    @observable results: Array<ResponseItemType> | null = [];
     @observable isLoading: boolean | undefined | null = true;
     @observable api: string = "https://swapi.co/api/people/";
 
-async componentDidMount(){
-        const response = await fetch(this.api);
-        const respJson = await response.json();
-        this.results = respJson.results;
-        this.isLoading = false
- }
+    async componentDidMount(){
+            const response = await fetch(this.api);
+            const respJson = await response.json();
+            this.results = respJson.results;
+            this.isLoading = false
+    }
 
- opisy = (props: []) => {
-     this.data = props;
- }
+    descriptions = (props: []) => {
+        this.data = props;
+    }
 
- render() {
-   const datas: [] | null = this.results;
-   //@ts-ignore
-   const renderNames = datas.map( 
-           (el => <Names {...el}
-                    state={this.data}
-                    details={this.opisy} 
-                    />)
-           ) 
+    render() {
+        const datas: Array<ResponseItemType> | null = this.results;
+    
+        const renderNames = () => {
+            if(datas === null){
+                return null
+                } else {
+                    return(
+                        datas.map( 
+                            (el => <Names {...el}
+                                        state={this.data}
+                                        details={this.descriptions}
+                                        key={el.name} 
+                                    />)
+                            ) 
+                        )
+                }
+        }
 
-     return (
+        return (
             <div className="app">
                 <div className="namesBox">
                 <h1>StarWars Heroes</h1>
                 <div ><img src={imgSword} className="swordImg"/></div>
                 <div className="lightSwordBlue"/>
                 {this.isLoading && <div className="spinner"></div>}
-                {renderNames}
+                {renderNames()}
                 </div>  
             </div>
-            )
+        )
+        
     }
 }
 
