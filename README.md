@@ -6,8 +6,9 @@ bash / cmd
 yarn run dev
 ```
 * scripts - dev in package.json for windows:
-* "dev": "del -Rf dist && yarn run webpack --config ./webpack/webpack.js --mode development && ./src/index.html ./dist/" 
-
+* "dev": "del /Q -Rf dist && yarn run webpack --config ./webpack/webpack.js --mode development && ./src/index.html ./dist/" 
+* for mac:
+* "dev": "rm -Rf dist && yarn run webpack --config ./webpack/webpack.js --mode development && cp ./src/index.html ./dist/"
 <!-- User commits change settings:
 
 git config user.email "email@example.com"

@@ -5,7 +5,8 @@
   "main": "index.js",
   "license": "beerware",
   "scripts": {
-    "dev": "rm -Rf dist && yarn run webpack --config ./webpack/webpack.js --mode development && cp ./src/index.html ./dist/"
+    "dev": "del /Q -Rf dist && yarn run webpack --config ./webpack/webpack.js --mode development && ./src/index.html ./dist/"
+  
   },
   "dependencies": {
     "@emotion/core": "^10.0.10",
