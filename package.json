@@ -1,9 +1,9 @@
 {
-  "name": "list_of_expenses",
+  "name": "ReactApp",
   "version": "1.0.0",
-  "description": "List of expenses",
+  "description": "React App",
   "main": "index.js",
-  "license": "beerware",
+  "license": "UNLICENSED",
   "scripts": {
     "dev": "del /Q -Rf dist && yarn run webpack --config ./webpack/webpack.js --mode development && ./src/index.html ./dist/"
   
