@@ -38,13 +38,13 @@ export class App extends React.Component<{}> {
                 } else {
                     return(
                         datas.map( 
-                            ( (el, id) => <Names 
-                                            name={el.name}
-                                            results={this.results}
-                                            key={id}/> )
-                        ) 
-                    )
-                }
+                            ((el, id) => <Names 
+                                        name={el.name}
+                                        results={this.results}
+                                        key={id}/> )
+                            ) 
+                        )
+                    }
             }
 
         return (
@@ -84,7 +84,6 @@ class Names extends React.Component<NamesPropsType> {
     }
 
     render() {
-    
         let nameAsId = this.nameAsId;
         
         const renderDetails = () => {
@@ -128,7 +127,6 @@ interface DetailsPropsType {
 const Details = (props: DetailsPropsType) => {
 
     const renderDet = () => {
-        
         if (props.details === null) {
             return null
         } else {
