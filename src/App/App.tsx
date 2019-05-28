@@ -19,7 +19,7 @@ interface ResponseItemType {
 export class App extends React.Component<{}> {
 
     @observable results: Array<ResponseItemType> = [];
-    @observable isLoading: boolean | undefined | null = true;
+    @observable isLoading: boolean | undefined = true;
     @observable api: string = "https://swapi.co/api/people/";
 
     async componentDidMount(){
@@ -78,24 +78,24 @@ class Names extends React.Component<NamesPropsType> {
     @observable isOpen: boolean = false;
     @observable nameAsId: string = '';
 
-    showDetails = (event: React.ChangeEvent<HTMLElement>) => {
+    showDetails = () => {
         this.isOpen = !this.isOpen;
-        this.nameAsId = event.currentTarget.innerText;
+        this.nameAsId = this.props.name;
     }
 
-  render() {
+    render() {
     
-    let nameAsId = this.nameAsId;
-    
-    const renderDetails = () => {
-        let newList = []
-            if (this.props.results === null) {
-                return null
-            } else {
-                newList = this.props.results.filter( (item) => item.name === nameAsId );
-            }
-        return newList; 
-    }
+        let nameAsId = this.nameAsId;
+        
+        const renderDetails = () => {
+            let newList = []
+                if (this.props.results === null) {
+                    return null
+                } else {
+                    newList = this.props.results.filter( (item) => item.name === nameAsId );
+                }
+            return newList; 
+        }
 
       return (
             <React.Fragment>
@@ -122,29 +122,42 @@ interface DetailsResponseItemType {
     eye_color:string
 }
 interface DetailsPropsType {
-    details: Array<DetailsResponseItemType> | null
+    details: Array<DetailsResponseItemType>  | null
 }
 
 const Details = (props: DetailsPropsType) => {
 
- const {height, mass, birth_year, gender, hair_color, skin_color, eye_color } = props.details[0];
+    const renderDet = () => {
+        
+        if (props.details === null) {
+            return null
+        } else {
+            return (
+                props.details.map( (el, id) => 
+                        <div className="details" key={id}>
+                            <div className="column">
+                                <p>Height: {el.height} cm</p>
+                                <p>Mass: {el.mass} kg</p>
+                                <p>Birth Year: {el.birth_year} 19 BBY</p>
+                                <p>Gender: {el.gender}</p>
+                            </div>
+                            <div className="column">
+                                <p>Hair: {el.hair_color}</p>
+                                <p>Skin: {el.skin_color}</p>
+                                <p>Eye: {el.eye_color}</p>
+                            </div>
+                            <div className="column">
+                                <div className="imgBox"> <img src="https://static.posters.cz/image/750webp/32195.webp"/></div>  
+                            </div>
+                        </div>
+                    ) 
+                )
+            }
+    }
 
     return(
-        <div className="details">
-            <div className="column">
-                <p>Height: {height} cm</p>
-                <p>Mass: {mass} kg</p>
-                <p>Birth Year: {birth_year} 19 BBY</p>
-                <p>Gender: {gender}</p>
-            </div>
-            <div className="column">
-                <p>Hair: {hair_color}</p>
-                <p>Skin: {skin_color}</p>
-                <p>Eye: {eye_color}</p>
-            </div>
-            <div className="column">
-                <div className="imgBox"> <img src="https://static.posters.cz/image/750webp/32195.webp"/></div>  
-            </div>
-        </div>
+        <React.Fragment>
+            {renderDet()}        
+        </React.Fragment>
     )
 }
